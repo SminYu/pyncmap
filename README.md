@@ -8,4 +8,4 @@ Unzip the compressed file and put the directory with python code
 
 No compatibility issue
 
-You can use reversed colormap to type "_r" after the colortable name (i.e., rainbow_r)
+You can use reversed colormap for any colortable just by typing "_r" after the colortable name (i.e., rainbow_r)
