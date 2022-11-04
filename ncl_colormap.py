@@ -30,8 +30,6 @@ def cmap(name):
         if len(colors) == 3: #append to list if fully rgb
             li_rgb.append(colors)
 
-    li_rgb = li_rgb[1:]
-
     if flag_reverse:
         li_rgb = list(reversed(li_rgb))
 
