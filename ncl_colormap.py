@@ -2,6 +2,13 @@
 import numpy as np
 from matplotlib.colors import ListedColormap
 
+def is_float(element) -> bool:
+    try:
+        float(element)
+        return True
+    except ValueError:
+        return False
+
 def cmap(name):
     if name.endswith('_r'):
         name = name[:-2]
@@ -13,19 +20,15 @@ def cmap(name):
     lines = f.readlines()
     lines = list(map(lambda s: s.strip('\n'), lines))
 
-    flag_ncolor  = False
-    flag_rgb = False
     li_rgb = []
     for i in range(len(lines)):
         line = lines[i]
-        if line.startswith('ncolors'):
-            flag_ncolor = True
-        
-        if line.startswith('#') & flag_ncolor:
-            flag_rgb = True
-        
-        if flag_rgb:
-            li_rgb.append([int(s) for s in line.split() if s.isdigit()])
+
+        colors = [float(s) for s in line.split() if is_float(s)]
+        #list only numeric
+
+        if len(colors) == 3: #append to list if fully rgb
+            li_rgb.append(colors)
 
     li_rgb = li_rgb[1:]
 
@@ -36,4 +39,3 @@ def cmap(name):
     data = data / np.max(data)
     cmap = ListedColormap(data, name=name)
     return cmap
-
