@@ -1,6 +1,6 @@
-#%%
 import numpy as np
 from matplotlib.colors import ListedColormap
+import os
 
 def is_float(element) -> bool:
     try:
@@ -16,7 +16,8 @@ def cmap(name):
     else:
         flag_reverse = False
 
-    f = open('cmap_data/{}.rgb'.format(name), 'r')
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    f = open(cwd+'/{}.rgb'.format(name), 'r')
     lines = f.readlines()
     lines = list(map(lambda s: s.strip('\n'), lines))
 
@@ -30,8 +31,6 @@ def cmap(name):
         if len(colors) == 3: #append to list if fully rgb
             li_rgb.append(colors)
 
-    li_rgb = li_rgb[1:]
-
     if flag_reverse:
         li_rgb = list(reversed(li_rgb))
 
@@ -39,3 +38,4 @@ def cmap(name):
     data = data / np.max(data)
     cmap = ListedColormap(data, name=name)
     return cmap
+
