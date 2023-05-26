@@ -16,7 +16,7 @@ def cmap(name):
     else:
         flag_reverse = False
 
-    cwd = os.path.dirname(os.path.realpath(__file__))
+    cwd = os.path.abspath('')
     f = open(cwd+'/{}.rgb'.format(name), 'r')
     lines = f.readlines()
     lines = list(map(lambda s: s.strip('\n'), lines))
