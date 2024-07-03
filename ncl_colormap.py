@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib.colors import ListedColormap
+from matplotlib.colors import ListedColormap, BoundaryNorm
 import os
 
 def is_float(element) -> bool:
@@ -16,8 +16,8 @@ def cmap(name):
     else:
         flag_reverse = False
 
-    cwd = os.path.abspath('')
-    f = open(cwd+'/{}.rgb'.format(name), 'r')
+    cwd = os.path.dirname(os.path.abspath(__file__))
+    f = open(cwd+'/cmap_data/{}.rgb'.format(name), 'r')
     lines = f.readlines()
     lines = list(map(lambda s: s.strip('\n'), lines))
 
@@ -39,3 +39,24 @@ def cmap(name):
     cmap = ListedColormap(data, name=name)
     return cmap
 
+def boundaries(name):
+    cwd = os.path.dirname(os.path.abspath(__file__))
+    f = open(cwd+'/cmap_data/{}.bound'.format(name), 'r')
+    lines = f.readlines()
+    lines = list(map(lambda s: s.strip('\n'), lines))
+
+    boundaries = []
+    for i in range(len(lines)):
+        boundaries.append(float(lines[i]))
+
+    return boundaries
+
+def norm(name):
+    _boundaries = boundaries(name)        
+    _cmap = cmap(name)
+    norm = BoundaryNorm(_boundaries, _cmap.N, clip=True)
+ 
+    return norm
+
+def cmap_norm_boundaries(name):
+    return cmap(name), norm(name), boundaries(name)
